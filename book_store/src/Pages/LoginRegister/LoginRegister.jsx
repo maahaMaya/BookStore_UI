@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import './LoginRegister.css'
 import LoginResetPageImage from '../../images/LoginResetPage.png'
 import Login from "../../Component/Login/Login";
 import Register from "../../Component/Register/Register";
 
 function LoginRegister() {
+    const [toggle, setToggle] = useState(true);
+
+    const LoginButtonClick = () => {
+        setToggle(true)
+    }
+    const RegisterButtonClick = () => {
+        setToggle(false)
+    }
     return (
         <div className="LoginRegisterMainDiv">
                 <div className="LoginRegisterFirstDiv">
@@ -13,11 +21,12 @@ function LoginRegister() {
                 </div>
                 <div className="LoginRegisterSecondDiv">
                     <div>
-                        <button>Login</button>
-                        <button>Login</button>
+                        <button onClick={LoginButtonClick}>Login</button>
+                        <button onClick={RegisterButtonClick}>Register</button>
                     </div>
-                    {/* <Login/> */}
-                    <Register/>
+                    {
+                        toggle ? <Login/> :<Register/>
+                    }
                 </div>
         </div>
     )
