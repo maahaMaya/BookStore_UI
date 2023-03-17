@@ -37,5 +37,19 @@
     display: inline-block;
     vertical-align: middle;
     position: absolute;
+}
 
+.ButtonDiv{
+    margin: 2vh;
+    display: flex;
+    justify-content: center;
+    gap: 13vw;
+}
+
+.LoginButtonDiv{
+    
+}
+
+.LoginButtonDiv{
+    
 }

@@ -1,4 +1,4 @@
-.LoginMainDiv{
+.SingupMainDiv{
     width: 32vw;
     height: 55vh;
     border-radius: 2%;
@@ -11,20 +11,7 @@
     gap: 1vw;
 }
 
-.LoginFormButton{
+.SingUpFormButton{
     width: 21.5vw;
     gap: 4vh;
 }
-.ForgetPasswordDiv{
-    font-size: 12px;
-    margin-left: 230px;
-}
-
-.OrTextDiv{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    font-size: 20px;
-    font: bolder
-}
-
