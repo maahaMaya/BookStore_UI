@@ -40,14 +40,14 @@
 }
 
 .ButtonDiv{
-    margin: 2vh;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 13vw;
+    gap: 7vw;
 }
 
 .LoginButtonDiv{
-    
+   
 }
 
 .LoginButtonDiv{

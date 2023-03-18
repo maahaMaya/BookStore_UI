@@ -50,7 +50,7 @@ function Singup() {
                     </InputLabel>
                     <BootstrapInput id="bootstrap-input" />
                 </FormControl>
-                <Button className="SingUpFormButton" size="large" variant="contained" style={{backgroundColor:'#A03037', textTransform:'none', fontSize:'17px', marginTop:'15px'}}>
+                <Button className="SingUpFormButton" size="large" variant="contained" style={{backgroundColor:'#A03037', textTransform:'none', fontSize:'17px', marginTop:'10px'}}>
                     Singup
                 </Button>
             </div>
