@@ -1,56 +1,68 @@
-import React from "react";
+import React, { useState } from 'react';
 import './Singup.css'
 
-import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
-import FormControl from '@mui/material/FormControl';
-import { alpha, styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+import TextField from '@mui/material/TextField';
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-    'label + &': {
-        marginTop: theme.spacing(2),
-    },
-    '& .MuiInputBase-input': {
-        borderRadius: 4,
-        position: 'relative',
-        backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        width: '20vw',
-        padding: '10px 12px',
-    },
-}));
 
 function Singup() {
+
+    const [customerSingupDetails, setCustomerSingupDetails] = useState({ fullname: '', email_id: '', passwords: '', phone_number: 0 });
+    const [regexCustomerSingupDetails, setRegexCustomerSingupDetails] = useState({ fullnameError: false, fullnameHelperText: '', email_idError: false, email_idHelperText: '', passwordsError: false, passwordsHelperText: '', phone_numberError: false, phone_numberHelperText: '' });
+
+
     return (
         <>
             <div className="SingupMainDiv">
-                <FormControl variant="standard">
-                    <InputLabel shrink htmlFor="bootstrap-input" error={true}>
-                        Full Name
-                    </InputLabel>
-                    <BootstrapInput id="bootstrap-input" />
-                </FormControl>
-                <FormControl variant="standard">
-                    <InputLabel shrink htmlFor="bootstrap-input" error={true}>
-                        Email Id
-                    </InputLabel>
-                    <BootstrapInput id="bootstrap-input" />
-                </FormControl>
-                <FormControl variant="standard">
-                    <InputLabel shrink htmlFor="bootstrap-input">
-                        Password
-                    </InputLabel>
-                    <BootstrapInput id="bootstrap-input" type="password" />
-                </FormControl>
-                <FormControl variant="standard">
-                    <InputLabel shrink htmlFor="bootstrap-input">
-                        Mobile Number
-                    </InputLabel>
-                    <BootstrapInput id="bootstrap-input" />
-                </FormControl>
-                <Button className="SingUpFormButton" size="large" variant="contained" style={{backgroundColor:'#A03037', textTransform:'none', fontSize:'17px', marginTop:'10px'}}>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'start', cursor: 'pointer', fontSize: '10px' }}>Full Name</div>
+                    <TextField
+                        id="outlined-basic1"
+                        error={regexCustomerSingupDetails.fullnameError}
+                        helperText={regexCustomerSingupDetails.fullnameHelperText}
+                        className='InputFullName'
+                        variant="outlined"
+                        size='small'
+                        style={{ width: '21vw' }}
+                    />
+                </div>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'start', cursor: 'pointer', fontSize: '10px' }}>Email Id</div>
+                    <TextField
+                        id="outlined-basic2"
+                        error={regexCustomerSingupDetails.email_idError}
+                        helperText={regexCustomerSingupDetails.email_idHelperText}
+                        className='InputGmail'
+                        variant="outlined"
+                        size='small'
+                        style={{ width: '21vw' }}
+                    />
+                </div>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'start', cursor: 'pointer', fontSize: '10px' }}>Password</div>
+                    <TextField
+                        id="outlined-basic3"
+                        error={regexCustomerSingupDetails.passwordsError}
+                        helperText={regexCustomerSingupDetails.passwordsHelperText}
+                        className='InputPassword'
+                        variant="outlined"
+                        size='small'
+                        style={{ width: '21vw' }}
+                    />
+                </div>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'start', cursor: 'pointer', fontSize: '10px' }}>Mobile Number</div>
+                    <TextField
+                        id="outlined-basic4"
+                        error={regexCustomerSingupDetails.phone_numberError}
+                        helperText={regexCustomerSingupDetails.phone_numberHelperText}
+                        className='InputMobileNumber'
+                        variant="outlined"
+                        size='small'
+                        style={{ width: '21vw' }}
+                    />
+                </div>
+                <Button className="SingUpFormButton" size="large" variant="contained" style={{ backgroundColor: '#A03037', textTransform: 'none', fontSize: '17px', marginTop: '10px' }}>
                     Singup
                 </Button>
             </div>

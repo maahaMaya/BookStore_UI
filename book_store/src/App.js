@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import LoginSingup from './Pages/LoginSingup/LoginRegister';
+import LoginSingup from './Pages/LoginSingup/LoginSingup';
 
 function App() {
   return (
