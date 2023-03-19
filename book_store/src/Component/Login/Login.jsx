@@ -9,7 +9,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&-+=()])([a-zA-Z0-9]*).
 
 function Login() {
     const [customerLoginDetails, setCustomerLoginDetails] = useState({ email_id: '', passwords: ''});
-    const [regexCustomerLoginDetails, setRegexCustomerLoginDetails] = useState({  email_idError: false, email_idHelperText: '', passwordsError: false, passwordsHelperText: ''});
+    const [regexCustomerLoginDetails, setRegexCustomerLoginDetails] = useState({  email_idError: false, email_idHelperText: ' ', passwordsError: false, passwordsHelperText: ' '});
 
     const EmailIdLoginTextField = (event) => {
         setCustomerLoginDetails(preState => ({...preState, email_id : event.target.value}))
@@ -22,14 +22,14 @@ function Login() {
         let passwordsRegexCheck = passwordRegex.test(customerLoginDetails.passwords);
 
         if(email_idRegexCheck === true){
-            setRegexCustomerLoginDetails(preState => ({...preState, email_idError: false, email_idHelperText: ''}))
+            setRegexCustomerLoginDetails(preState => ({...preState, email_idError: false, email_idHelperText: ' '}))
         }
         else{
             setRegexCustomerLoginDetails(preState => ({...preState, email_idError: true, email_idHelperText: 'Enter Valid Email'}))
         }
 
         if(passwordsRegexCheck === true){
-            setRegexCustomerLoginDetails(preState => ({...preState, passwordsError: false, passwordsHelperText: ''}))
+            setRegexCustomerLoginDetails(preState => ({...preState, passwordsError: false, passwordsHelperText: ' '}))
         }
         else{
             setRegexCustomerLoginDetails(preState => ({...preState, passwordsError: true, passwordsHelperText: 'Enter Valid Password'}))
@@ -60,10 +60,11 @@ function Login() {
                         className='InputPassword'
                         variant="outlined"
                         size='medium'
+                        type="password"
                         onChange={PasswordLoginTextField}
                         style={{width:'21vw'}}
                     />
-                    <div style={{ display: 'flex', justifyContent: 'end', cursor: 'pointer' ,fontSize: '12px', color:'#9D9D9D'}}>Forget Password?</div>
+                    <div style={{ display: 'flex', justifyContent: 'end', cursor: 'pointer' ,fontSize: '12px', color:'#9D9D9D', marginTop:'-20px'}}>Forget Password?</div>
                 </div>
                 <Button 
                 className="LoginFormButton" 

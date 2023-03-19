@@ -12,7 +12,7 @@ const phoneRegex = /^([0-9]*).{10}$/;
 function Singup() {
 
     const [customerSingupDetails, setCustomerSingupDetails] = useState({ fullname: '', email_id: '', passwords: '', phone_number: 0 });
-    const [regexCustomerSingupDetails, setRegexCustomerSingupDetails] = useState({ fullnameError: false, fullnameHelperText: '', email_idError: false, email_idHelperText: '', passwordsError: false, passwordsHelperText: '', phone_numberError: false, phone_numberHelperText: '' });
+    const [regexCustomerSingupDetails, setRegexCustomerSingupDetails] = useState({ fullnameError: false, fullnameHelperText: ' ', email_idError: false, email_idHelperText: ' ', passwordsError: false, passwordsHelperText: ' ', phone_numberError: false, phone_numberHelperText: ' ' });
 
     const FullNameSingupTextField = (e) => {
         setCustomerSingupDetails(preState => ({...preState, fullname : e.target.value}))
@@ -37,28 +37,28 @@ function Singup() {
         let phoneRegexCheck = phoneRegex.test(customerSingupDetails.phone_number)
 
         if(fullNameRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, fullnameError: false, fullnameHelperText: ''}))
+            setRegexCustomerSingupDetails(preState => ({...preState, fullnameError: false, fullnameHelperText: ' '}))
         }
         else{
             setRegexCustomerSingupDetails(preState => ({...preState, fullnameError: true, fullnameHelperText: 'Enter Correct format Name'}))
         }
 
         if(emailIdRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, email_idError: false, email_idHelperText: ''}))
+            setRegexCustomerSingupDetails(preState => ({...preState, email_idError: false, email_idHelperText: ' '}))
         }
         else{
             setRegexCustomerSingupDetails(preState => ({...preState, email_idError: true, email_idHelperText: 'Enter Correct format email'}))
         }
 
         if(passwordsRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, passwordsError: false, passwordsHelperText: ''}))
+            setRegexCustomerSingupDetails(preState => ({...preState, passwordsError: false, passwordsHelperText: ' '}))
         }
         else{
             setRegexCustomerSingupDetails(preState => ({...preState, passwordsError: true, passwordsHelperText: 'Enter Correct format password'}))
         }
 
         if(phoneRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, phone_numberError: false, phone_numberHelperText: ''}))
+            setRegexCustomerSingupDetails(preState => ({...preState, phone_numberError: false, phone_numberHelperText: ' '}))
         }
         else{
             setRegexCustomerSingupDetails(preState => ({...preState, phone_numberError: true, phone_numberHelperText: 'Enter 10 digits number'}))
@@ -103,6 +103,7 @@ function Singup() {
                         className='InputPassword'
                         variant="outlined"
                         size='small'
+                        type="password"
                         onChange={PasswordSingupTextField}
                         style={{ width: '21vw' }}
                     />
