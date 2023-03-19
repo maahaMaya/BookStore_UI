@@ -4,10 +4,37 @@ import './Login.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
+const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&-+=()])([a-zA-Z0-9]*).{8,}$/;
+
 function Login() {
     const [customerLoginDetails, setCustomerLoginDetails] = useState({ email_id: '', passwords: ''});
     const [regexCustomerLoginDetails, setRegexCustomerLoginDetails] = useState({  email_idError: false, email_idHelperText: '', passwordsError: false, passwordsHelperText: ''});
 
+    const EmailIdLoginTextField = (event) => {
+        setCustomerLoginDetails(preState => ({...preState, email_id : event.target.value}))
+    }
+    const PasswordLoginTextField = (event) => {
+        setCustomerLoginDetails(preState => ({...preState, passwords: event.target.value}))
+    }
+    const LoginButton = ()  => {
+        let email_idRegexCheck = emailRegex.test(customerLoginDetails.email_id);
+        let passwordsRegexCheck = passwordRegex.test(customerLoginDetails.passwords);
+
+        if(email_idRegexCheck === true){
+            setRegexCustomerLoginDetails(preState => ({...preState, email_idError: false, email_idHelperText: ''}))
+        }
+        else{
+            setRegexCustomerLoginDetails(preState => ({...preState, email_idError: true, email_idHelperText: 'Enter Valid Email'}))
+        }
+
+        if(passwordsRegexCheck === true){
+            setRegexCustomerLoginDetails(preState => ({...preState, passwordsError: false, passwordsHelperText: ''}))
+        }
+        else{
+            setRegexCustomerLoginDetails(preState => ({...preState, passwordsError: true, passwordsHelperText: 'Enter Valid Password'}))
+        }
+    }
     return (
         <>
             <div className="LoginMainDiv">
@@ -20,6 +47,7 @@ function Login() {
                         className='InputGmail'
                         variant="outlined"
                         size='medium'
+                        onChange={EmailIdLoginTextField}
                        style={{width:'21vw'}}
                     />
                 </div>
@@ -32,11 +60,17 @@ function Login() {
                         className='InputPassword'
                         variant="outlined"
                         size='medium'
+                        onChange={PasswordLoginTextField}
                         style={{width:'21vw'}}
                     />
                     <div style={{ display: 'flex', justifyContent: 'end', cursor: 'pointer' ,fontSize: '12px', color:'#9D9D9D'}}>Forget Password?</div>
                 </div>
-                <Button className="LoginFormButton" size="large" variant="contained" style={{ backgroundColor: '#A03037', textTransform: 'none', fontSize: '17px', marginTop: '15px' }}>
+                <Button 
+                className="LoginFormButton" 
+                size="large" 
+                variant="contained" 
+                style={{ backgroundColor: '#A03037', textTransform: 'none', fontSize: '17px', marginTop: '15px' }}
+                onClick={LoginButton}>
                     Login
                 </Button>
                 <div className="OrTextDiv">
