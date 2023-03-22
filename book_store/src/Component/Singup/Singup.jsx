@@ -3,6 +3,7 @@ import './Singup.css'
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { CustomerSignupApi } from '../../Services/CustomerSevice';
 
 const nameRegex = /^([A-Z]{1}[a-z,A-Z]{2,})$/;
 const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
@@ -15,53 +16,72 @@ function Singup() {
     const [regexCustomerSingupDetails, setRegexCustomerSingupDetails] = useState({ fullnameError: false, fullnameHelperText: ' ', email_idError: false, email_idHelperText: ' ', passwordsError: false, passwordsHelperText: ' ', phone_numberError: false, phone_numberHelperText: ' ' });
 
     const FullNameSingupTextField = (e) => {
-        setCustomerSingupDetails(preState => ({...preState, fullname : e.target.value}))
+        setCustomerSingupDetails(preState => ({ ...preState, fullname: e.target.value }))
     }
 
     const EmailIdSingupTextField = (e) => {
-        setCustomerSingupDetails(preState => ({...preState, email_id : e.target.value}))
+        setCustomerSingupDetails(preState => ({ ...preState, email_id: e.target.value }))
     }
 
     const PasswordSingupTextField = (e) => {
-        setCustomerSingupDetails(preState => ({...preState, passwords : e.target.value}))
+        setCustomerSingupDetails(preState => ({ ...preState, passwords: e.target.value }))
     }
 
-    const  PhoneNumberSingupTextField = (e) => {
-        setCustomerSingupDetails(preState => ({...preState, phone_number : e.target.value}))
+    const PhoneNumberSingupTextField = (e) => {
+        setCustomerSingupDetails(preState => ({ ...preState, phone_number: Number(e.target.value) }))
     }
 
-    const SinupButton = () => {
+    const SignupButton = () => {
         let fullNameRegexCheck = nameRegex.test(customerSingupDetails.fullname)
         let emailIdRegexCheck = emailRegex.test(customerSingupDetails.email_id)
         let passwordsRegexCheck = passwordRegex.test(customerSingupDetails.passwords)
         let phoneRegexCheck = phoneRegex.test(customerSingupDetails.phone_number)
 
-        if(fullNameRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, fullnameError: false, fullnameHelperText: ' '}))
+        if (fullNameRegexCheck) {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, fullnameError: false, fullnameHelperText: ' ' }))
         }
-        else{
-            setRegexCustomerSingupDetails(preState => ({...preState, fullnameError: true, fullnameHelperText: 'Enter Correct format Name'}))
-        }
-
-        if(emailIdRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, email_idError: false, email_idHelperText: ' '}))
-        }
-        else{
-            setRegexCustomerSingupDetails(preState => ({...preState, email_idError: true, email_idHelperText: 'Enter Correct format email'}))
+        else {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, fullnameError: true, fullnameHelperText: 'Enter Correct format Name' }))
         }
 
-        if(passwordsRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, passwordsError: false, passwordsHelperText: ' '}))
+        if (emailIdRegexCheck) {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, email_idError: false, email_idHelperText: ' ' }))
         }
-        else{
-            setRegexCustomerSingupDetails(preState => ({...preState, passwordsError: true, passwordsHelperText: 'Enter Correct format password'}))
+        else {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, email_idError: true, email_idHelperText: 'Enter Correct format email' }))
         }
 
-        if(phoneRegexCheck){
-            setRegexCustomerSingupDetails(preState => ({...preState, phone_numberError: false, phone_numberHelperText: ' '}))
+        if (passwordsRegexCheck) {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, passwordsError: false, passwordsHelperText: ' ' }))
         }
-        else{
-            setRegexCustomerSingupDetails(preState => ({...preState, phone_numberError: true, phone_numberHelperText: 'Enter 10 digits number'}))
+        else {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, passwordsError: true, passwordsHelperText: 'Enter Correct format password' }))
+        }
+
+        if (phoneRegexCheck) {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, phone_numberError: false, phone_numberHelperText: ' ' }))
+        }
+        else {
+            setRegexCustomerSingupDetails(preState => ({ ...preState, phone_numberError: true, phone_numberHelperText: 'Enter 10 digits number' }))
+        }
+
+        //fullNameRegexCheck && emailIdRegexCheck && passwordsRegexCheck && phoneRegexCheck
+        if (true) {
+            let customerSigupData = {
+                "fullname": customerSingupDetails.fullname,
+                "email_id": customerSingupDetails.email_id,
+                "passwords": customerSingupDetails.passwords,
+                "phone_number": customerSingupDetails.phone_number
+              }
+            CustomerSignupApi(customerSigupData)
+            .then(res => {
+                console.log(res)
+                console.log("1")
+            })
+            .catch(err => {
+                console.log(err)
+                console.log("3")
+            })
         }
     }
 
@@ -121,12 +141,12 @@ function Singup() {
                         style={{ width: '21vw' }}
                     />
                 </div>
-                <Button 
-                    className="SingUpFormButton" 
-                    size="large" 
-                    variant="contained" 
+                <Button
+                    className="SingUpFormButton"
+                    size="large"
+                    variant="contained"
                     style={{ backgroundColor: '#A03037', textTransform: 'none', fontSize: '17px', marginTop: '10px' }}
-                    onClick={SinupButton}
+                    onClick={SignupButton}
                 >
                     Singup
                 </Button>
