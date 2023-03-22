@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import './LoginSingup.css'
+import './LoginSignup.css'
 import LoginResetPageImage from '../../images/LoginResetPage.png'
 import Login from "../../Component/Login/Login";
 import Singup from "../../Component/Singup/Singup";
 
-function LoginSingup() {
+function LoginSignup() {
     const [toggle, setToggle] = useState({ButtonToggle:true, ButtonOneColor: "#0A0102", ButtonOneDisplay:"", ButtonTwoColor: "#878787", ButtonTwoDisplay:"none"});
 
     const LoginButtonClick = () => {
@@ -30,7 +30,7 @@ function LoginSingup() {
                     </div>
                     <div style={{display:'flex', flexDirection:'column', alignContent:'center', alignItems:'center'}}>
                         <div  size="large" onClick={RegisterButtonClick} style={{ backgroundColor: '#fff', fontWeight: '600', fontSize: '28px', color: toggle.ButtonTwoColor, cursor:'pointer' }}>
-                            SINGUP
+                            SIGNUP
                         </div>
                         <div style={{ width: '2vw', height: '0.7vh', backgroundColor: '#A03037', borderRadius: '5px' , display: toggle.ButtonTwoDisplay}}></div>
                     </div>
@@ -43,4 +43,4 @@ function LoginSingup() {
     )
 }
 
-export default LoginSingup;
+export default LoginSignup;
