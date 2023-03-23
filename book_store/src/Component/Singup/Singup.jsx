@@ -65,8 +65,7 @@ function Singup() {
             setRegexCustomerSingupDetails(preState => ({ ...preState, phone_numberError: true, phone_numberHelperText: 'Enter 10 digits number' }))
         }
 
-        //fullNameRegexCheck && emailIdRegexCheck && passwordsRegexCheck && phoneRegexCheck
-        if (true) {
+        if (fullNameRegexCheck && emailIdRegexCheck && passwordsRegexCheck && phoneRegexCheck) {
             let customerSigupData = {
                 "fullname": customerSingupDetails.fullname,
                 "email_id": customerSingupDetails.email_id,
