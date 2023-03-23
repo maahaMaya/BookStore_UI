@@ -4,6 +4,7 @@ import './Login.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { CustomerSignInApi } from "../../Services/CustomerSevice";
+import { useNavigate } from 'react-router-dom';
 
 const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&-+=()])([a-zA-Z0-9]*).{8,}$/;
@@ -18,6 +19,9 @@ function Login() {
     const PasswordLoginTextField = (event) => {
         setCustomerLoginDetails(preState => ({ ...preState, passwords: event.target.value }))
     }
+
+    let navigate = useNavigate();
+
     const LoginButton = () => {
         let email_idRegexCheck = emailRegex.test(customerLoginDetails.email_id);
         let passwordsRegexCheck = passwordRegex.test(customerLoginDetails.passwords);
@@ -81,7 +85,11 @@ function Login() {
                         onChange={PasswordLoginTextField}
                         style={{ width: '21vw' }}
                     />
-                    <div style={{ display: 'flex', justifyContent: 'end', cursor: 'pointer', fontSize: '12px', color: '#9D9D9D', marginTop: '-20px' }}>Forget Password?</div>
+                    <Button
+                        sx={{ display: 'flex', justifyContent: 'end', border:'none',backgroundColor:'#fff', background:'transparent', fontSize: '12px', color: '#9D9D9D', marginTop: '-30px', marginLeft:'195px' }}
+                        onClick={() => navigate("/forget")}
+                    >Forget Password?
+                    </Button>
                 </div>
                 <Button
                     className="LoginFormButton"
@@ -100,7 +108,7 @@ function Login() {
                     <Button size="large" variant="contained" style={{ textTransform: 'none', fontSize: '17px', marginRight: '0.5vw', width: '10.5vw', backgroundColor: '#4266B2' }}>
                         FaceBook
                     </Button>
-                    <Button size="large" variant="outlined" style={{ textTransform: 'none', fontSize: '17px', width: '10.5vw', backgroundColor: '#F5F5F5', borderColor: '#E4E4E4', color: '#0A0102' }}>
+                    <Button size="large" variant="outlined" style={{ textTransform: 'none', fontSize: '17px', width: '10.5vw', backgroundColor: '#F5F5F5', borderColor: '#E4E4E4', color: '#0A0102' }} onClick={() => navigate("/forget")}>
                         Google
                     </Button>
                 </div>

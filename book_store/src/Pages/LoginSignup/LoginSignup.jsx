@@ -4,6 +4,7 @@ import LoginResetPageImage from '../../images/LoginResetPage.png'
 import Login from "../../Component/Login/Login";
 import Singup from "../../Component/Singup/Singup";
 
+
 function LoginSignup() {
     const [toggle, setToggle] = useState({ButtonToggle:true, ButtonOneColor: "#0A0102", ButtonOneDisplay:"", ButtonTwoColor: "#878787", ButtonTwoDisplay:"none"});
 
@@ -13,7 +14,7 @@ function LoginSignup() {
     const RegisterButtonClick = () => {
         setToggle(preState => ({...preState, ButtonToggle:false, ButtonOneColor: "#878787", ButtonOneDisplay:"none", ButtonTwoColor: "#0A0102", ButtonTwoDisplay:""}))
     }
-    
+
     return (
         <div className="LoginSigupMainDiv">
             <div className="LoginSigupFirstDiv">
