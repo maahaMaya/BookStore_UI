@@ -22,7 +22,7 @@ function BookBox(props) {
     }, [])
     return (
         <>
-            <Paper  sx={{ width: '235px', height: '275px', margin: '100px', position:'relative' }} variant="outlined"  >
+            <Paper  sx={{ width: '235px', height: '275px', position:'relative' }} variant="outlined"  >
                 <div style={{ zIndex: '2',  position:'absolute', marginLeft: '28px',marginTop:'128px', width: '178px', height: '37px', backgroundColor: '#FFFFFF', fontSize:'15px',display: outOfStock.divFirstDisplay}}>
                     <div style={{marginTop:'7px', fontWeight:'500'}}>OUT OF STOCK</div>
                 </div>

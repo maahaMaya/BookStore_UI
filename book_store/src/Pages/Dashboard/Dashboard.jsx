@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BookBox from "../../Component/BookBox/BookBox";
+import DisplayBook from "../../Component/DisplayBook/DisplayBook";
 import Header from "../../Component/Header/Header";
 import { GetAllBookApi } from "../../Services/BookService";
 
@@ -24,11 +25,12 @@ function Dashboard() {
     return (
         <>
             <Header />
-            <div>
+            {/* <div style={{display:'flex', flexWrap:'wrap', gap:'10px'}}>
                 {
                     bookList.map(book => (<BookBox key={book.book_id} book={book}/>))
                 }
-            </div>
+            </div> */}
+            <DisplayBook/>
         </>
     )
 }
