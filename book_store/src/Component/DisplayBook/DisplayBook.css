@@ -16,7 +16,7 @@
 .DisplayBookFirstDivFirstBoxFirst{
     width: 3vw;
     height: 6vh;
-    background-color: rgb(214, 238, 170);
+    background-color: #FFE7E9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +26,7 @@
 .DisplayBookFirstDivFirstBoxSecond{
     width: 3vw;
     height: 6vh;
-    background-color: rgb(170, 238, 237);
+    background-color: #FFE7E9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,8 +38,8 @@
 .DisplayBookFirstDivSecondBoxImageBox{
     width: 23vw;
     height: 50vh;
-    border: 1px solid red;
-    background-color: palegoldenrod;
+    border: 1px solid #D1D1D1;
+    background-color: #FCFCFC;
     display: flex;
     justify-content: center;
     align-items: center;

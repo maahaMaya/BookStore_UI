@@ -30,7 +30,7 @@ function Dashboard() {
                     bookList.map(book => (<BookBox key={book.book_id} book={book}/>))
                 }
             </div> */}
-            <DisplayBook/>
+            <DisplayBook />
         </>
     )
 }

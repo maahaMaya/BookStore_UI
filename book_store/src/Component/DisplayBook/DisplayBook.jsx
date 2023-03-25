@@ -1,40 +1,76 @@
 import { Button } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import React from "react";
+import React, { useState } from "react";
 import StarIcon from '@mui/icons-material/Star';
 import './DisplayBook.css'
 import Rating from '@mui/material/Rating';
 import InputBase from '@mui/material/InputBase';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
 
 
 function DisplayBook() {
 
-    const [value, setValue] = React.useState(2);
+    const [imageSrc, setImageSrc] = React.useState({ value: 'https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg', firstBorder: '1px solid red', secondBorder: 'none' });
+
+    const [addToBag, setAddToBag] = React.useState({ displayButton: '', displayIncreaseDecrease: 'none' });
+
+    const [addToCartValue, setAddToCartValue] = useState(1);
+    const FirstDivImage = () => {
+        setImageSrc(preState => ({ ...preState, value: 'https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg', firstBorder: '1px solid red', secondBorder: 'none' }))
+    }
+    const SecondDivImage = () => {
+        setImageSrc(preState => ({ ...preState, value: 'https://ia902304.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/02.-mahabharata-volume-2/01.Mahabharata%20Volume%201_jp2.zip&file=01.Mahabharata%20Volume%201_jp2/01.Mahabharata%20Volume%201_0000.jp2&id=02.-mahabharata-volume-2&scale=4&rotate=0', firstBorder: 'none', secondBorder: '1px solid red' }))
+    }
+
+    const BookAddToBag = () => {
+        setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
+    }
+
+    const DecreaseAddToCartButton = () => {
+        if (addToCartValue > 1) {
+            setAddToCartValue(addToCartValue - 1)
+        }
+    }
+
+    const IncreaseAddToCartButton = () => {
+        setAddToCartValue(addToCartValue + 1)
+    }
+
     return (
         <div className="DisplayBookMainDiv">
             <div className="DisplayBookFirstDiv">
                 <div className="DisplayBookFirstDivFirstBox">
-                    <div className="DisplayBookFirstDivFirstBoxFirst" style={{border:'1px solid red'}}>
+                    <div className="DisplayBookFirstDivFirstBoxFirst" onClick={FirstDivImage} style={{ border: imageSrc.firstBorder }}>
                         <img src="https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg" height="43px" width="33px" />
                     </div>
-                    <div className="DisplayBookFirstDivFirstBoxSecond" onClick={() => console.log("jo")}>
-                        <img src="https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg" height="43px" width="33px" />
+                    <div className="DisplayBookFirstDivFirstBoxSecond" onClick={SecondDivImage} style={{ border: imageSrc.secondBorder }}>
+                        <img src="https://ia902304.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/02.-mahabharata-volume-2/01.Mahabharata%20Volume%201_jp2.zip&file=01.Mahabharata%20Volume%201_jp2/01.Mahabharata%20Volume%201_0000.jp2&id=02.-mahabharata-volume-2&scale=4&rotate=0" height="43px" width="33px" />
                     </div>
                 </div>
                 <div className="DisplayBookFirstDivSecondBox">
                     <div className="DisplayBookFirstDivSecondBoxImageBox">
-                        <img src="https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg" height="360px" width="260px" />
+                        <img src={imageSrc.value} height="360px" width="260px" />
                     </div>
                     <div className="DisplayBookFirstDivSecondBoxButtonBox">
                         <div>
-                            <Button size="large" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '0.5vw', width: '11vw', backgroundColor: '#A03037', display: '' }}>
+                            <Button onClick={BookAddToBag} size="large" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '0.5vw', width: '11vw', backgroundColor: '#A03037', display: addToBag.displayButton }}>
                                 ADD TO BAG
                             </Button>
-                            {/* <div style={{ width: '11vw', border: '1px solid red' }}>
-                                <Icon baseClassName="fas" className="fa-plus-circle" sx={{ fontSize: 30 }} />
-                                
-                            </div> */}
-
+                            <div style={{ display: addToBag.displayIncreaseDecrease }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', width: '10vw', height: '4.8vh' }}>
+                                    <div onClick={DecreaseAddToCartButton} style={{ width: '2vw', height: '4vh', border: '1px solid #DBDBDB', borderRadius: '50%', cursor: 'pointer' }}>
+                                        <RemoveIcon sx={{ marginTop: '1px', fontSize: 30 }} />
+                                    </div>
+                                    <div style={{ width: '3vw', height: '4vh', border: '1px solid #DBDBDB', color: '#333232', fontSize: '22PX' }}>
+                                        {addToCartValue}
+                                    </div>
+                                    <div onClick={IncreaseAddToCartButton} style={{ width: '2vw', height: '4vh', border: '1px solid #DBDBDB', borderRadius: '50%', cursor: 'pointer' }}>
+                                        <AddIcon sx={{ marginTop: '1px', fontSize: 30 }} />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <Button size="large" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '0.5vw', width: '11vw', backgroundColor: '#333333' }}>
@@ -87,18 +123,18 @@ function DisplayBook() {
                                 placeholder="Standard warning"
                                 multiline
                                 sx={{ width: '93%', height: '4vw', backgroundColor: '#fff' }} />
-                            <br /><br />
-                            <Button size="small" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '1.3vw', width: '6vw', backgroundColor: '#3371B5', float: 'right' }}>
+                            <br />
+                            <Button size="small" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '1.3vw', width: '6vw', backgroundColor: '#3371B5', float: 'right', marginTop: '1vw' }}>
                                 Submit
                             </Button>
                         </div>
                         <br />
                     </div>
+                    <div>
+                        <DisplayFeedback />
+                        <DisplayFeedback />
+                    </div>
                 </div>
-
-                {/* <div className="DisplayBookSecondDivCustomerFeedbackAdd">
-
-                </div> */}
             </div>
         </div>
     )
