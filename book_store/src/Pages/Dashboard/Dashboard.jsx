@@ -25,12 +25,12 @@ function Dashboard() {
     return (
         <>
             <Header />
-            {/* <div style={{display:'flex', flexWrap:'wrap', gap:'10px'}}>
+            <div style={{display:'flex', flexWrap:'wrap', gap:'10px', border:'1px solid red', width:'80vw', marginLeft:'10.8vw'}}>
                 {
-                    bookList.map(book => (<BookBox key={book.book_id} book={book}/>))
+                    bookList.map(book => (<BookBox key={book.book_id} book={book}/> ))
                 }
-            </div> */}
-            <DisplayBook />
+            </div>
+            {/* <DisplayBook /> */}
         </>
     )
 }

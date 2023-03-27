@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
+import './Header.css'
 
 import HeaderPagebookImage from '../../images/bookLogo.png'
 import TextField from '@mui/material/TextField';
@@ -33,7 +33,7 @@ function Header() {
                             placeholder="Search"
                             id="outlined-start-adornment"
                             size='small'
-                            sx={{ ml: '6%', mr: '14%', width: '40%' , backgroundColor:'#FCFCFC', borderRadius:'5px'}}
+                            sx={{ ml: '6%', mr: '17.2%', width: '40%' , backgroundColor:'#FCFCFC', borderRadius:'5px'}}
                             InputProps={{
                                 startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
                             }}
@@ -51,6 +51,18 @@ function Header() {
                     </Toolbar>
                 </AppBar>
             </Box>
+            <div style={{display:'flex', justifyContent:'baseline', justifyContent:'center', gap:'63vw', marginTop:'2vh', marginBottom:'2vh'}}>
+                <div>
+                    <span className="MainPageBookFirstText">Books</span><span className="MainPageBookSecondText">(120)</span>
+                </div>
+                <div>
+                    <select name="books" id="booksSelect" style={{width:'10vw', height:'3vh'}}>
+                        <option value="lowToHigh">Price : low to high</option>
+                        <option value="highToLow">Price : high to low</option>
+                        <option value="Availability">Books Availabile</option>
+                    </select>
+                </div>
+            </div>
         </>
     )
 }
