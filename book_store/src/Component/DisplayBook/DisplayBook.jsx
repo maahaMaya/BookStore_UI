@@ -10,15 +10,15 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
 
 
-function DisplayBook() {
+function DisplayBook(props) {
 
-    const [imageSrc, setImageSrc] = React.useState({ value: 'https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg', firstBorder: '1px solid red', secondBorder: 'none' });
+    const [imageSrc, setImageSrc] = React.useState({ value: props.openBookData.book_image, firstBorder: '1px solid red', secondBorder: 'none' });
 
     const [addToBag, setAddToBag] = React.useState({ displayButton: '', displayIncreaseDecrease: 'none' });
 
     const [addToCartValue, setAddToCartValue] = useState(1);
     const FirstDivImage = () => {
-        setImageSrc(preState => ({ ...preState, value: 'https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg', firstBorder: '1px solid red', secondBorder: 'none' }))
+        setImageSrc(preState => ({ ...preState, value: props.openBookData.book_image, firstBorder: '1px solid red', secondBorder: 'none' }))
     }
     const SecondDivImage = () => {
         setImageSrc(preState => ({ ...preState, value: 'https://ia902304.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/02.-mahabharata-volume-2/01.Mahabharata%20Volume%201_jp2.zip&file=01.Mahabharata%20Volume%201_jp2/01.Mahabharata%20Volume%201_0000.jp2&id=02.-mahabharata-volume-2&scale=4&rotate=0', firstBorder: 'none', secondBorder: '1px solid red' }))
@@ -43,10 +43,10 @@ function DisplayBook() {
             <div className="DisplayBookFirstDiv">
                 <div className="DisplayBookFirstDivFirstBox">
                     <div className="DisplayBookFirstDivFirstBoxFirst" onClick={FirstDivImage} style={{ border: imageSrc.firstBorder }}>
-                        <img src="https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg" height="43px" width="33px" />
+                        <img src={props.openBookData.book_image}  height="43px" width="33px" />
                     </div>
                     <div className="DisplayBookFirstDivFirstBoxSecond" onClick={SecondDivImage} style={{ border: imageSrc.secondBorder }}>
-                        <img src="https://ia902304.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/02.-mahabharata-volume-2/01.Mahabharata%20Volume%201_jp2.zip&file=01.Mahabharata%20Volume%201_jp2/01.Mahabharata%20Volume%201_0000.jp2&id=02.-mahabharata-volume-2&scale=4&rotate=0" height="43px" width="33px" />
+                        <img src="https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg" height="43px" width="33px" />
                     </div>
                 </div>
                 <div className="DisplayBookFirstDivSecondBox">
@@ -92,8 +92,8 @@ function DisplayBook() {
                             <span style={{ color: '#878787', marginLeft: '5px' }}> &#10629;20&#10630;</span>
                         </div>
                         <div style={{ display: "flex", fontSize: '28px', marginTop: '8px' }}>
-                            <div style={{ color: '#0A0102', fontWeight: '500' }}>Rs. 100</div>
-                            <span style={{ color: '#878787', marginLeft: '5px', fontSize: '16px', marginTop: '8px', marginBottom: '15px' }}><s>Rs. 1000</s></span>
+                            <div style={{ color: '#0A0102', fontWeight: '500' }}>Rs. {props.openBookData.book_discount_price}</div>
+                            <span style={{ color: '#878787', marginLeft: '5px', fontSize: '16px', marginTop: '8px', marginBottom: '15px' }}><s>Rs. {props.openBookData.book_actual_price}</s></span>
                         </div>
                         <hr style={{ border: '1px solid #9D9D9D' }} />
                         <div style={{ marginTop: '2vw', marginBottom: '2vw' }}>
@@ -102,11 +102,7 @@ function DisplayBook() {
                                 <div style={{ color: '#878787' }}>Book Detail</div>
                             </div>
                             <div style={{ color: '#373434', textAlign: 'left', marginLeft: '1vw', height: '100%' }}>
-                                See the documentation below for a complete reference to all
-                                of the props and classes available to the components mentioned here.
-                                See the documentation below for a complete reference to all
-                                of the props and classes available to the components mentioned here.
-                                See the documentation below for a complete reference to all
+                                {props.openBookData.book_description}
                             </div>
                         </div>
                         <hr style={{ border: '1px solid #9D9D9D' }} />
