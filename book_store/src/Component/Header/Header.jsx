@@ -6,14 +6,16 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import './Header.css'
 
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HeaderPagebookImage from '../../images/bookLogo.png'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
+import { styled } from "@material-ui/core";
 
 function Header(props) {
-    // const [toggleIcon, setToggleIcon] = useState(false)
     const ProfileIcon = () => {
 
     }
@@ -24,6 +26,13 @@ function Header(props) {
     const PassDataToParent = (event) => {
         props.ListenToHeader(event.target.value)
     }
+
+    const StyledBadge = styled(Badge)({
+        "& .MuiBadge-badge": {
+          color: "#fff",
+          backgroundColor: "#A03037"
+        }
+      });
     return (
         <>
             <Box sx={{ flexGrow: 1 }}>
@@ -45,12 +54,14 @@ function Header(props) {
                         <Button color="inherit" style={{ display: 'flex', flexDirection: 'column', textTransform: 'none', marginRight: '2vw' }} onClick={ProfileIcon}>
                             <PersonOutlineRoundedIcon />
                             <div style={{ fontSize: '10px', marginTop: '4px' }}>Profile</div>
-                            <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px'}}></div>
+                            <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                         <Button color="inherit" style={{ display: 'flex', flexDirection: 'column', textTransform: 'none' }} onClick={CartIcon}>
-                            <PersonOutlineRoundedIcon />
+                            <StyledBadge badgeContent={4} >
+                                <ShoppingCartIcon />
+                            </StyledBadge>
                             <div style={{ fontSize: '10px', marginTop: '4px' }}>Cart</div>
-                            <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px'}}></div>
+                            <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                     </Toolbar>
                 </AppBar>
