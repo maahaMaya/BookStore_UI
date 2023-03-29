@@ -21,7 +21,7 @@ function DisplayBook(props) {
         setImageSrc(preState => ({ ...preState, value: props.openBookData.book_image, firstBorder: '1px solid red', secondBorder: 'none' }))
     }
     const SecondDivImage = () => {
-        setImageSrc(preState => ({ ...preState, value: 'https://ia902304.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/02.-mahabharata-volume-2/01.Mahabharata%20Volume%201_jp2.zip&file=01.Mahabharata%20Volume%201_jp2/01.Mahabharata%20Volume%201_0000.jp2&id=02.-mahabharata-volume-2&scale=4&rotate=0', firstBorder: 'none', secondBorder: '1px solid red' }))
+        setImageSrc(preState => ({ ...preState, value: 'https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg', firstBorder: 'none', secondBorder: '1px solid red' }))
     }
 
     const BookAddToBag = () => {
@@ -83,9 +83,9 @@ function DisplayBook(props) {
             <div className="DisplayBookSecondDiv">
                 <div className="DisplayBookSecondDivBookDetails">
                     <div>
-                        <div style={{ fontWeight: '400', fontSize: '28px', float: 'left' }}>Book Title Book Book Title Book </div>
+                        <div style={{ fontWeight: '400', fontSize: '28px', float: 'left' }}>{props.openBookData.book_title} </div>
                         <br /><br />
-                        <div style={{ fontSize: '17px', color: '#878787', float: 'left', marginTop: '-5px' }}>bose</div>
+                        <div style={{ fontSize: '17px', color: '#878787', float: 'left', marginTop: '-5px' }}>{props.openBookData.book_author}</div>
                         <br /><br />
                         <div style={{ display: "flex", justifyContent: 'baseline', alignContent: 'baseline', fontSize: '14px', marginTop: '-8px' }}>
                             <div style={{ width: '50px', height: '22px', backgroundColor: '#388E3C' }}>4.8 <StarIcon sx={{ fontSize: 13, color: '#fff', marginTop: '2px' }} /></div>

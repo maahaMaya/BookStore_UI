@@ -56,8 +56,6 @@
 .DisplayBookSecondDivBookDetails{
     width: 40vw;
     height: 100%;
-    border: 1px solid black;
-    background-color: rgb(170, 238, 195);
 }
 
 .DisplayBookSecondDivCustomerFeedbackAdd{
