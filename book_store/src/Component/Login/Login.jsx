@@ -50,6 +50,7 @@ function Login() {
                 .then(res => {
                     console.log(res)
                     localStorage.setItem("token", res.data.data)
+                    localStorage.setItem("customerLogin", true)
                 })
                 .catch(err => {
                     console.log(err)
@@ -86,7 +87,7 @@ function Login() {
                         style={{ width: '21vw' }}
                     />
                     <Button
-                        sx={{ display: 'flex', justifyContent: 'end', border:'none',backgroundColor:'#fff', background:'transparent', fontSize: '12px', color: '#9D9D9D', marginTop: '-30px', marginLeft:'195px' }}
+                        sx={{ display: 'flex', justifyContent: 'end', border: 'none', backgroundColor: '#fff', background: 'transparent', fontSize: '12px', color: '#9D9D9D', marginTop: '-30px', marginLeft: '195px' }}
                         onClick={() => navigate("/forget")}
                     >Forget Password?
                     </Button>

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Cart from "../Component/Cart/Cart";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import ForgetResetPassword from "../Pages/ForgetResetPassword/ForgetResetPassword";
 
@@ -10,9 +11,10 @@ function Routing(){
     <>
         <Router>
             <Routes>
-                <Route path="/" element={<LoginSignup/>}/>
+            <Route path="/" element={<Dashboard/>}/>
+                <Route path="/loginSignup" element={<LoginSignup/>}/>
                 <Route path="/forget" element={<ForgetResetPassword/>}/>
-                <Route path="/dashboard" element={<Dashboard/>}/>
+                <Route path="/customerCart" element={<Cart/>}/>
             </Routes>
         </Router>
     </>

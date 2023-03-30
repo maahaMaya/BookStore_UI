@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,13 +14,18 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
 import { styled } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+
 
 function Header(props) {
+    const [shoppingCartIconDisplay, setShoppingCartIconDisplay] = useState({first:'none', second:''})
+    let navigate = useNavigate();
     const ProfileIcon = () => {
 
     }
     const CartIcon = () => {
-
+        DiplayCartIcon();
+        navigate('/customerCart')
     }
 
     const PassDataToParent = (event) => {
@@ -33,9 +38,19 @@ function Header(props) {
           backgroundColor: "#A03037"
         }
       });
+
+    const DiplayCartIcon = () => {
+        if(localStorage.getItem("customerLogin")){
+            setShoppingCartIconDisplay(preState => ({...preState, first:'', second:'none'}))
+        }
+        else{
+            setShoppingCartIconDisplay(preState => ({...preState, first:'none', second:''}))
+        }
+    }
+
     return (
         <>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box onLoad={DiplayCartIcon} sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: '#A03037' }}>
                     <Toolbar>
                         <img src={HeaderPagebookImage} alt="bookImageLogo" height='28px' width='30px' style={{ marginLeft: '9vw' }} />
@@ -57,9 +72,10 @@ function Header(props) {
                             <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                         <Button color="inherit" style={{ display: 'flex', flexDirection: 'column', textTransform: 'none' }} onClick={CartIcon}>
-                            <StyledBadge badgeContent={4} >
+                            <StyledBadge badgeContent={4} sx={{display: shoppingCartIconDisplay.first}}>
                                 <ShoppingCartIcon />
-                            </StyledBadge>
+                            </StyledBadge >
+                            <ShoppingCartIcon sx={{display: shoppingCartIconDisplay.second}}/>
                             <div style={{ fontSize: '10px', marginTop: '4px' }}>Cart</div>
                             <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>

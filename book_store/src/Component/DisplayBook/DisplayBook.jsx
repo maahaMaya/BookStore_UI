@@ -25,7 +25,9 @@ function DisplayBook(props) {
     }
 
     const BookAddToBag = () => {
-        setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
+        if(localStorage.getItem("customerLogin") && props.openBookData.book_stock > 1){
+            setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
+        }
     }
 
     const DecreaseAddToCartButton = () => {
