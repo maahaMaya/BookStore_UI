@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
 import { AddFeedbackByCustomerApi, GetBookFeedbackByIdApi } from "../../Services/FeedbackService";
+import { AddBookInCustomerCartApi } from "../../Services/CartService";
 
 
 function DisplayBook(props) {
@@ -37,11 +38,34 @@ function DisplayBook(props) {
     const DecreaseAddToCartButton = () => {
         if (addToCartValue > 1) {
             setAddToCartValue(addToCartValue - 1)
+            let bookCartData = {
+                "book_id": props.openBookData.book_id,
+                "book_quantity": -1
+            }
+            AddBookInCustomerCartApi(bookCartData)
+                .then(res => {
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
         }
     }
 
     const IncreaseAddToCartButton = () => {
         setAddToCartValue(addToCartValue + 1)
+        let bookCartData = {
+            "book_id": props.openBookData.book_id,
+            "book_quantity": 1
+        }
+        AddBookInCustomerCartApi(bookCartData)
+            .then(res => {
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const InputBaseForFeedbaxk = (e) => {
@@ -51,27 +75,27 @@ function DisplayBook(props) {
     const FeedbackButtonClick = () => {
         if (localStorage.getItem("customerLogin")) {
             AddFeedbackByCustomerApi(feedbackValue)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }
+
+    const GetFeedbackForBook = () => {
+        GetBookFeedbackByIdApi(props.openBookData.book_id)
             .then(res => {
+                setFeedbackData(res.data.data)
                 console.log(res)
             })
             .catch(err => {
                 console.log(err)
             })
-        }
     }
 
-    const GetFeedbackForBook  = () => {
-        GetBookFeedbackByIdApi(props.openBookData.book_id)
-        .then(res => {
-            setFeedbackData(res.data.data)
-            console.log(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
-
-    useEffect( () => {
+    useEffect(() => {
         GetFeedbackForBook()
     }, [])
 
@@ -171,9 +195,9 @@ function DisplayBook(props) {
                         </div>
                         <br />
                     </div>
-                    <div>                        
+                    <div>
                         {
-                            feedbackDataList.map(feedback => (<DisplayFeedback feedback={feedback}/>))
+                            feedbackDataList.map(feedback => (<DisplayFeedback feedback={feedback} />))
                         }
                     </div>
                 </div>
