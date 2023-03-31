@@ -82,11 +82,11 @@ function Header(props) {
                     </Toolbar>
                 </AppBar>
             </Box>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '63vw', marginTop: '2vh', marginBottom: '2vh' }}>
-                <div>
-                    <span className="MainPageBookFirstText">Books</span><span className="MainPageBookSecondText">({props.bookArrayLength})</span>
+            <div style={{ display: 'flex' , marginTop: '2vh', marginBottom: '2vh'}}>
+                <div style={{marginLeft:'11vw'}}>
+                    <span className="MainPageBookFirstText">Books</span><span className="MainPageBookSecondText">({props.headerData.BookArrayLength})</span>
                 </div>
-                <div>
+                <div style={{display: props.headerData.displaySelect, marginLeft:'63vw'}}>
                     <select onChange={PassDataToParent} name="books" id="booksSelect" style={{ width: '10vw', height: '3vh' }}>
                         <option value="default">default</option>
                         <option value="lowToHigh">Price : low to high</option>

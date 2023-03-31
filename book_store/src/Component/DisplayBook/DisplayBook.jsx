@@ -8,6 +8,7 @@ import InputBase from '@mui/material/InputBase';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
+import { AddFeedbackByCustomerApi } from "../../Services/FeedbackService";
 
 
 function DisplayBook(props) {
@@ -16,6 +17,7 @@ function DisplayBook(props) {
 
     const [addToBag, setAddToBag] = React.useState({ displayButton: '', displayIncreaseDecrease: 'none' });
 
+    const [feedbackValue, setFeedbackValue] = useState({ book_id: props.openBookData.book_id, feedback_rating: 0, feedback_comment: '' })
     const [addToCartValue, setAddToCartValue] = useState(1);
     const FirstDivImage = () => {
         setImageSrc(preState => ({ ...preState, value: props.openBookData.book_image, firstBorder: '1px solid red', secondBorder: 'none' }))
@@ -25,7 +27,7 @@ function DisplayBook(props) {
     }
 
     const BookAddToBag = () => {
-        if(localStorage.getItem("customerLogin") && props.openBookData.book_stock > 1){
+        if (localStorage.getItem("customerLogin") && props.openBookData.book_stock > 1) {
             setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
         }
     }
@@ -40,12 +42,28 @@ function DisplayBook(props) {
         setAddToCartValue(addToCartValue + 1)
     }
 
+    const InputBaseForFeedbaxk = (e) => {
+        setFeedbackValue(preState => ({ ...preState, feedback_comment: e.target.value }))
+    }
+
+    const FeedbackButtonClick = () => {
+        if (localStorage.getItem("customerLogin")) {
+            AddFeedbackByCustomerApi(feedbackValue)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    }
+
     return (
         <div className="DisplayBookMainDiv">
             <div className="DisplayBookFirstDiv">
                 <div className="DisplayBookFirstDivFirstBox">
                     <div className="DisplayBookFirstDivFirstBoxFirst" onClick={FirstDivImage} style={{ border: imageSrc.firstBorder }}>
-                        <img src={props.openBookData.book_image}  height="43px" width="33px" />
+                        <img src={props.openBookData.book_image} height="43px" width="33px" />
                     </div>
                     <div className="DisplayBookFirstDivFirstBoxSecond" onClick={SecondDivImage} style={{ border: imageSrc.secondBorder }}>
                         <img src="https://i1.sndcdn.com/artworks-000424577547-k9pxfv-t3000x3000.jpg" height="43px" width="33px" />
@@ -115,14 +133,22 @@ function DisplayBook(props) {
                         <div style={{ height: '24vh', backgroundColor: '#F5F5F5' }}>
                             <div style={{ fontSize: '14px', float: 'left', marginLeft: '1vw' }}>Overall Rating</div>
                             <br />
-                            <Rating name="no-value" value={null} sx={{ float: 'left', marginLeft: '1vw', fontSize: 28 }} />
+                            <Rating name="half-rating" value={feedbackValue.feedback_rating} precision={0.5}
+                                onChange={(event, newValue) => {
+                                    setFeedbackValue(preState => ({ ...preState, feedback_rating: newValue }))
+                                }}
+                                sx={{ float: 'left', marginLeft: '1vw', fontSize: 28 }} />
                             <br /><br />
                             <InputBase
                                 placeholder="Standard warning"
                                 multiline
+                                onChange={InputBaseForFeedbaxk}
                                 sx={{ width: '93%', height: '4vw', backgroundColor: '#fff' }} />
                             <br />
-                            <Button size="small" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '1.3vw', width: '6vw', backgroundColor: '#3371B5', float: 'right', marginTop: '1vw' }}>
+                            <Button size="small"
+                                onClick={FeedbackButtonClick}
+                                variant="contained"
+                                style={{ textTransform: 'none', fontSize: '14px', marginRight: '1.3vw', width: '6vw', backgroundColor: '#3371B5', float: 'right', marginTop: '1vw' }}>
                                 Submit
                             </Button>
                         </div>

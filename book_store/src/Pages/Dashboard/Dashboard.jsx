@@ -9,7 +9,7 @@ function Dashboard() {
     const [toggleBook, setToggleBook] = useState(true);
     const [openBookData, setOpenBookData] = useState();
     const [bookArraySortValue, setookArraySortValue] = useState("default")
-    const [bookArrayLength, setBookArrayLength] = useState(0)
+    const [headerData, setHeaderData] = useState({BookArrayLength:0, displaySelect:''})
 
     const GetAllBookApiCall = () => {
         GetAllBookApi()
@@ -17,15 +17,15 @@ function Dashboard() {
                 let bookArray = [];
                 if(bookArraySortValue === "default"){
                     bookArray = res.data.data;
-                    setBookArrayLength(res.data.data.length);
+                    setHeaderData(preState => ({...preState, BookArrayLength:res.data.data.length}));
                 }
                 else if(bookArraySortValue === "lowToHigh"){
                     bookArray = res.data.data.sort((firstItem, secondItem) => firstItem.book_discount_price - secondItem.book_discount_price);
-                    setBookArrayLength(res.data.data.length);
+                    setHeaderData(preState => ({...preState, BookArrayLength:res.data.data.length}));
                 }
                 else if(bookArraySortValue === "highToLow"){
                     bookArray = res.data.data.sort((firstItem, secondItem) =>  secondItem.book_discount_price - firstItem.book_discount_price);
-                    setBookArrayLength(res.data.data.length);
+                    setHeaderData(preState => ({...preState, BookArrayLength:res.data.data.length}));
                 }
                 else if(bookArraySortValue === "Availability"){
                     bookArray = res.data.data.filter((book) => {
@@ -33,7 +33,7 @@ function Dashboard() {
                             return book;
                         }
                     })
-                    setBookArrayLength(bookArray.length);
+                    setHeaderData(preState => ({...preState, BookArrayLength:bookArray.length}));
                 }
                 setBookList(bookArray)
             })
@@ -50,6 +50,7 @@ function Dashboard() {
     const ListenToBookBox = (Book) => {
         setToggleBook(false)
         setOpenBookData(Book)
+        setHeaderData(preState => ({...preState, displaySelect:'none'}));
     }
 
     const ListenToHeader = (val) => {
@@ -58,7 +59,7 @@ function Dashboard() {
     
     return (
         <>
-            <Header ListenToHeader={ListenToHeader} bookArrayLength={bookArrayLength}/>
+            <Header ListenToHeader={ListenToHeader} headerData={headerData}/>
             {
                 toggleBook ?
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', border: '1px solid red', width: '80vw', marginLeft: '10.8vw' }}>
