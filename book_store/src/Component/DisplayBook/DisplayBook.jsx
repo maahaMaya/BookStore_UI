@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StarIcon from '@mui/icons-material/Star';
 import './DisplayBook.css'
 import Rating from '@mui/material/Rating';
@@ -8,7 +8,7 @@ import InputBase from '@mui/material/InputBase';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
-import { AddFeedbackByCustomerApi } from "../../Services/FeedbackService";
+import { AddFeedbackByCustomerApi, GetBookFeedbackByIdApi } from "../../Services/FeedbackService";
 
 
 function DisplayBook(props) {
@@ -19,6 +19,8 @@ function DisplayBook(props) {
 
     const [feedbackValue, setFeedbackValue] = useState({ book_id: props.openBookData.book_id, feedback_rating: 0, feedback_comment: '' })
     const [addToCartValue, setAddToCartValue] = useState(1);
+    const [feedbackDataList, setFeedbackData] = useState([]);
+
     const FirstDivImage = () => {
         setImageSrc(preState => ({ ...preState, value: props.openBookData.book_image, firstBorder: '1px solid red', secondBorder: 'none' }))
     }
@@ -57,6 +59,21 @@ function DisplayBook(props) {
             })
         }
     }
+
+    const GetFeedbackForBook  = () => {
+        GetBookFeedbackByIdApi(props.openBookData.book_id)
+        .then(res => {
+            setFeedbackData(res.data.data)
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    useEffect( () => {
+        GetFeedbackForBook()
+    }, [])
 
     return (
         <div className="DisplayBookMainDiv">
@@ -154,9 +171,10 @@ function DisplayBook(props) {
                         </div>
                         <br />
                     </div>
-                    <div>
-                        <DisplayFeedback />
-                        <DisplayFeedback />
+                    <div>                        
+                        {
+                            feedbackDataList.map(feedback => (<DisplayFeedback feedback={feedback}/>))
+                        }
                     </div>
                 </div>
             </div>

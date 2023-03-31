@@ -12,20 +12,21 @@ function stringAvatar(name) {
         children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
     };
 }
-export default function DisplayFeedback() {
+export default function DisplayFeedback(props) {
     return (
         <>
             <div style={{ display: 'flex', gap: '10px' }}>
-                <Avatar {...stringAvatar('Kent Dodds')} />
-                <div style={{ color: '#0A0102', fontSize: '20px', fontWeight: '450', marginTop: '5px' }}>Kent Dodds</div>
+                <Avatar {...stringAvatar(props.feedback.fullname)} />
+                <div style={{ color: '#0A0102', fontSize: '20px', fontWeight: '450', marginTop: '5px' }}>{props.feedback.fullname}</div>
             </div>
             <div style={{ float: 'left', marginLeft: '2.5vw' }}>
-                <Rating name="disabled" value={3} disabled />
+                <Rating name="half-rating-disabled" value={props.feedback.feedback_rating} disabled   precision={0.5}/>
             </div>
-            <div style={{textAlign:'left', float: 'left', marginLeft: '2.5vw' }}>
-                img elements must have an alt prop, either with meaningful text, or an empty string for decorative images
+            <br/>
+            <div style={{ textAlign: 'left', float: 'left', marginLeft: '-7.3vw' }}>
+                {props.feedback.feedback_comment}
             </div>
-            <br/><br/><br/><br/>
+            <br /><br /><br /><br />
         </>
     )
 }
