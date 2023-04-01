@@ -8,7 +8,6 @@
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",
     "@testing-library/jest-dom": "^5.16.5",
@@ -18,7 +17,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

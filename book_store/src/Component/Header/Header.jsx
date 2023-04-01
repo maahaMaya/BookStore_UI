@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,18 +13,20 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
-import { styled } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
+import { GetCustomerBookInCartApi } from "../../Services/CartService";
 
 
 function Header(props) {
-    const [shoppingCartIconDisplay, setShoppingCartIconDisplay] = useState({first:'none', second:''})
+    const [shoppingCartIconDisplay, setShoppingCartIconDisplay] = useState({ first: 'none', second: '' })
+    const [customerCart, setTotalCustomerCart] = useState({customerCartData:[], totalCustomerCart:0})
+
     let navigate = useNavigate();
     const ProfileIcon = () => {
 
     }
     const CartIcon = () => {
-        DiplayCartIcon();
         navigate('/customerCart')
     }
 
@@ -34,23 +36,37 @@ function Header(props) {
 
     const StyledBadge = styled(Badge)({
         "& .MuiBadge-badge": {
-          color: "#fff",
-          backgroundColor: "#A03037"
+            color: "#fff",
+            backgroundColor: "#A03037"
         }
-      });
+    });
 
-    const DiplayCartIcon = () => {
-        if(localStorage.getItem("customerLogin")){
-            setShoppingCartIconDisplay(preState => ({...preState, first:'', second:'none'}))
+    useEffect(() => {
+        if (localStorage.getItem("customerLogin")) {
+            GetCustomerCartDataInHeader()
+            setShoppingCartIconDisplay(preState => ({ ...preState, first: '', second: 'none' }))
         }
-        else{
-            setShoppingCartIconDisplay(preState => ({...preState, first:'none', second:''}))
+        else {
+            setShoppingCartIconDisplay(preState => ({ ...preState, first: 'none', second: '' }))
         }
+    },
+        [])
+    
+    const GetCustomerCartDataInHeader = () => {
+        GetCustomerBookInCartApi()
+            .then(res => {
+                console.log(res.data.data)
+                let cartSum = res.data.data.reduce((acc, curr) => acc + curr.book_quantity, 0);
+                setTotalCustomerCart(preState => ({ ...preState, customerCartData: res.data.data, totalCustomerCart: cartSum }))
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (
         <>
-            <Box onLoad={DiplayCartIcon} sx={{ flexGrow: 1 }}>
+            <Box  sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: '#A03037' }}>
                     <Toolbar>
                         <img src={HeaderPagebookImage} alt="bookImageLogo" height='28px' width='30px' style={{ marginLeft: '9vw' }} />
@@ -72,21 +88,21 @@ function Header(props) {
                             <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                         <Button color="inherit" style={{ display: 'flex', flexDirection: 'column', textTransform: 'none' }} onClick={CartIcon}>
-                            <StyledBadge badgeContent={4} sx={{display: shoppingCartIconDisplay.first}}>
+                            <StyledBadge badgeContent={customerCart.totalCustomerCart} sx={{ display: shoppingCartIconDisplay.first }}>
                                 <ShoppingCartIcon />
                             </StyledBadge >
-                            <ShoppingCartIcon sx={{display: shoppingCartIconDisplay.second}}/>
+                            <ShoppingCartIcon sx={{ display: shoppingCartIconDisplay.second }} />
                             <div style={{ fontSize: '10px', marginTop: '4px' }}>Cart</div>
                             <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                     </Toolbar>
                 </AppBar>
             </Box>
-            <div style={{ display: 'flex' , marginTop: '2vh', marginBottom: '2vh'}}>
-                <div style={{marginLeft:'11vw'}}>
+            <div style={{ display: 'flex', marginTop: '2vh', marginBottom: '2vh' }}>
+                <div style={{ marginLeft: '11vw' }}>
                     <span className="MainPageBookFirstText">Books</span><span className="MainPageBookSecondText">({props.headerData.BookArrayLength})</span>
                 </div>
-                <div style={{display: props.headerData.displaySelect, marginLeft:'63vw'}}>
+                <div style={{ display: props.headerData.displaySelect, marginLeft: '63vw' }}>
                     <select onChange={PassDataToParent} name="books" id="booksSelect" style={{ width: '10vw', height: '3vh' }}>
                         <option value="default">default</option>
                         <option value="lowToHigh">Price : low to high</option>

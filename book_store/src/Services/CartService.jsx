@@ -7,3 +7,8 @@ export const AddBookInCustomerCartApi = (data) => {
     const response = axios.post(`${FeedbackApi}/addBookInCustomerCart`, data, HeaderConfig);
     return response
 }
+
+export const GetCustomerBookInCartApi = (data) => {
+    const response = axios.get(`${FeedbackApi}/getBookInCustomerCart`, HeaderConfig);
+    return response
+}

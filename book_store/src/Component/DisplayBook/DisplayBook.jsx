@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
 import { AddFeedbackByCustomerApi, GetBookFeedbackByIdApi } from "../../Services/FeedbackService";
-import { AddBookInCustomerCartApi } from "../../Services/CartService";
+import { AddBookInCustomerCartApi, GetCustomerBookInCartApi } from "../../Services/CartService";
 
 
 function DisplayBook(props) {
@@ -17,6 +17,7 @@ function DisplayBook(props) {
     const [imageSrc, setImageSrc] = React.useState({ value: props.openBookData.book_image, firstBorder: '1px solid red', secondBorder: 'none' });
 
     const [addToBag, setAddToBag] = React.useState({ displayButton: '', displayIncreaseDecrease: 'none' });
+    const [customerCart, setTotalCustomerCart] = useState({ customerCartData: [], totalCustomerCart: 1 })
 
     const [feedbackValue, setFeedbackValue] = useState({ book_id: props.openBookData.book_id, feedback_rating: 0, feedback_comment: '' })
     const [addToCartValue, setAddToCartValue] = useState(1);
@@ -32,36 +33,37 @@ function DisplayBook(props) {
     const BookAddToBag = () => {
         if (localStorage.getItem("customerLogin") && props.openBookData.book_stock > 1) {
             setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
+            IncreaseAddToCartButton();
         }
     }
 
     const DecreaseAddToCartButton = () => {
-        if (addToCartValue > 1) {
-            setAddToCartValue(addToCartValue - 1)
+        if (customerCart.totalCustomerCart > 0) {
             let bookCartData = {
                 "book_id": props.openBookData.book_id,
                 "book_quantity": -1
             }
             AddBookInCustomerCartApi(bookCartData)
                 .then(res => {
-
+                    if(customerCart.totalCustomerCart === 1){
+                        setAddToBag(preState => ({ ...preState, displayButton: '', displayIncreaseDecrease: 'none' }))
+                    }
+                    GetCustomerCartDataInBookById()
                 })
                 .catch(err => {
                     console.log(err)
                 })
-
         }
     }
 
     const IncreaseAddToCartButton = () => {
-        setAddToCartValue(addToCartValue + 1)
         let bookCartData = {
             "book_id": props.openBookData.book_id,
             "book_quantity": 1
         }
         AddBookInCustomerCartApi(bookCartData)
             .then(res => {
-
+                GetCustomerCartDataInBookById()
             })
             .catch(err => {
                 console.log(err)
@@ -76,6 +78,7 @@ function DisplayBook(props) {
         if (localStorage.getItem("customerLogin")) {
             AddFeedbackByCustomerApi(feedbackValue)
                 .then(res => {
+                    GetFeedbackForBook();
                     console.log(res)
                 })
                 .catch(err => {
@@ -97,7 +100,28 @@ function DisplayBook(props) {
 
     useEffect(() => {
         GetFeedbackForBook()
+        GetCustomerCartDataInBookById();
     }, [])
+
+    const GetCustomerCartDataInBookById = () => {
+        GetCustomerBookInCartApi()
+            .then(res => {
+                let cartDataByBookId = [];
+                cartDataByBookId = res.data.data.filter((cartData) => {
+                    if(cartData.book_id === props.openBookData.book_id){
+                        if(cartData.book_quantity > 0){
+                            setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
+                        }
+                        return cartData;
+                    }
+                })
+                let cartSum = cartDataByBookId.reduce((acc, curr) => acc + curr.book_quantity, 0);
+                setTotalCustomerCart(preState => ({ ...preState, customerCartData: cartDataByBookId, totalCustomerCart: cartSum }))
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     return (
         <div className="DisplayBookMainDiv">
@@ -125,7 +149,7 @@ function DisplayBook(props) {
                                         <RemoveIcon sx={{ marginTop: '1px', fontSize: 30 }} />
                                     </div>
                                     <div style={{ width: '3vw', height: '4vh', border: '1px solid #DBDBDB', color: '#333232', fontSize: '22PX' }}>
-                                        {addToCartValue}
+                                        {customerCart.totalCustomerCart}
                                     </div>
                                     <div onClick={IncreaseAddToCartButton} style={{ width: '2vw', height: '4vh', border: '1px solid #DBDBDB', borderRadius: '50%', cursor: 'pointer' }}>
                                         <AddIcon sx={{ marginTop: '1px', fontSize: 30 }} />
