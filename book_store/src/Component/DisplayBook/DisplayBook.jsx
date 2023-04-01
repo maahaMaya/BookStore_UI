@@ -117,6 +117,8 @@ function DisplayBook(props) {
                 })
                 let cartSum = cartDataByBookId.reduce((acc, curr) => acc + curr.book_quantity, 0);
                 setTotalCustomerCart(preState => ({ ...preState, customerCartData: cartDataByBookId, totalCustomerCart: cartSum }))
+                let totalCartData = res.data.data.reduce((acc, curr) => acc + curr.book_quantity, 0);
+                localStorage.setItem("totalCartData", totalCartData)
             })
             .catch(err => {
                 console.log(err);

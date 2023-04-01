@@ -20,7 +20,7 @@ import { GetCustomerBookInCartApi } from "../../Services/CartService";
 
 function Header(props) {
     const [shoppingCartIconDisplay, setShoppingCartIconDisplay] = useState({ first: 'none', second: '' })
-    const [customerCart, setTotalCustomerCart] = useState({customerCartData:[], totalCustomerCart:0})
+    const [customerCart, setTotalCustomerCart] = useState({ customerCartData: [], totalCustomerCart: 0 })
 
     let navigate = useNavigate();
     const ProfileIcon = () => {
@@ -51,11 +51,10 @@ function Header(props) {
         }
     },
         [])
-    
+
     const GetCustomerCartDataInHeader = () => {
         GetCustomerBookInCartApi()
             .then(res => {
-                console.log(res.data.data)
                 let cartSum = res.data.data.reduce((acc, curr) => acc + curr.book_quantity, 0);
                 setTotalCustomerCart(preState => ({ ...preState, customerCartData: res.data.data, totalCustomerCart: cartSum }))
             })
@@ -64,9 +63,13 @@ function Header(props) {
             })
     }
 
+    useEffect(() => {
+        GetCustomerCartDataInHeader();
+    })
+
     return (
         <>
-            <Box  sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: '#A03037' }}>
                     <Toolbar>
                         <img src={HeaderPagebookImage} alt="bookImageLogo" height='28px' width='30px' style={{ marginLeft: '9vw' }} />
