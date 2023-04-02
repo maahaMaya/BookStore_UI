@@ -4,22 +4,48 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import NativeSelect from '@mui/material/NativeSelect';
 import { Button } from "@mui/material";
 import { GetAllBookByIdApi } from "../../Services/BookService";
+import { AddBookInCustomerCartApi } from "../../Services/CartService";
 
 function CartPage(props) {
     const [customerOrderData, setCustomerOrderData] = useState({ address: '' });
     const [getBookById, setGetBookById] = useState([]);
-    const [calculatePrice, setCalculatePrice] = useState({totalBookActualPrice:0, totalBookDiscountPrice:0});
+    const [calculatePrice, setCalculatePrice] = useState({ totalBookActualPrice: 1, totalBookDiscountPrice: 1 });
+    const [bookCartUpdate, setBookCartUpdate] = useState(props.cart.book_quantity)
 
     const handleChange = (event) => {
         setCustomerOrderData(preState => ({ ...preState, address: event.target.value }));
     };
 
     const DecreaseAddToCartButton = () => {
-
+        if (bookCartUpdate > 0) {
+            let bookCartData = {
+                "book_id": props.cart.book_id,
+                "book_quantity": -1
+            }
+            AddBookInCustomerCartApi(bookCartData)
+                .then(res => {
+                    GetBookById(props.cart.book_id)
+                    setBookCartUpdate(bookCartUpdate - 1)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
     }
 
     const IncreaseAddToCartButton = () => {
-
+        let bookCartData = {
+            "book_id": props.cart.book_id,
+            "book_quantity": 1
+        }
+        AddBookInCustomerCartApi(bookCartData)
+            .then(res => {
+                GetBookById(props.cart.book_id)
+                setBookCartUpdate(bookCartUpdate + 1)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const GetBookById = (id) => {
@@ -34,15 +60,20 @@ function CartPage(props) {
     }
 
     const CalculateTotalPrice = () => {
-        let totalBookActualPrices = getBookById.book_actual_price * props.cart.book_quantity;
-        let totalBookDiscountPrices = getBookById.book_discount_price * props.cart.book_quantity
-        setCalculatePrice(preState => ({...preState, totalBookActualPrice: totalBookActualPrices, totalBookDiscountPrice: totalBookDiscountPrices}))
+        let totalBookActualPrices = getBookById.book_actual_price * bookCartUpdate;
+        let totalBookDiscountPrices = getBookById.book_discount_price * bookCartUpdate;
+        setCalculatePrice(preState => ({ ...preState, totalBookActualPrice: totalBookActualPrices, totalBookDiscountPrice: totalBookDiscountPrices }))
+
     }
 
 
     useEffect(() => {
         GetBookById(props.cart.book_id)
     }, [])
+
+    useEffect(() => {
+        CalculateTotalPrice();
+    }, [getBookById])
 
     return (
         <>
@@ -74,8 +105,8 @@ function CartPage(props) {
                                 <div style={{ fontSize: '12px', color: '#878787', float: 'left', marginTop: '-1.2vh' }}>{getBookById.book_author}</div>
                                 <br />
                                 <div style={{ display: "flex", justifyContent: 'baseline', alignContent: 'baseline', fontSize: '10px', marginTop: '-4px' }}>
-                                    <div style={{ color: '#0A0102', fontWeight: '700', fontSize: '15px' }}>Rs. {calculatePrice.totalBookActualPrice}</div>
-                                    <span style={{ color: '#878787', marginLeft: '5px', fontSize: '12px', marginTop: '1.4px' }}><s>Rs. {calculatePrice.totalBookDiscountPrice}</s></span>
+                                    <div style={{ color: '#0A0102', fontWeight: '700', fontSize: '15px' }}>Rs. {calculatePrice.totalBookDiscountPrice}</div>
+                                    <span style={{ color: '#878787', marginLeft: '5px', fontSize: '12px', marginTop: '1.4px' }}><s>Rs. {calculatePrice.totalBookActualPrice}</s></span>
                                 </div>
                                 <br />
                                 <div style={{ display: 'flex', gap: '1vw' }}>
@@ -85,7 +116,7 @@ function CartPage(props) {
                                                 <RemoveIcon sx={{ marginTop: '1px', fontSize: 20 }} />
                                             </div>
                                             <div style={{ width: '2.2vw', height: '1.5vw', border: '1px solid #DBDBDB', color: '#333232', fontSize: '16PX' }}>
-                                                {props.cart.book_quantity}
+                                                {bookCartUpdate}
                                             </div>
                                             <div onClick={IncreaseAddToCartButton} style={{ width: '1.5vw', height: '1.5vw', border: '1px solid #DBDBDB', borderRadius: '50%', cursor: 'pointer' }}>
                                                 <AddIcon sx={{ marginTop: '1px', fontSize: 20 }} />
