@@ -9,20 +9,14 @@ import Paper from '@mui/material/Paper';
 import Wishlist from './Wishlist';
 import { GetWishlistApi } from '../../Services/WishlistService';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3)
-];
-
 export default function WishlistPage() {
 
   const [wishlistData, setWishlistData] = useState([]);
   const [wishlistDataLength, setLishlistDataLength] = useState(0)
 
+  const AutoRefreshWishlistPage = () => {
+    GetWishlistData()
+  }
   const GetWishlistData = () => {
     GetWishlistApi()
       .then(res => {
@@ -53,7 +47,7 @@ export default function WishlistPage() {
               key={wishlistRowData.wishlist_id}
             >
               <TableCell component="th" scope="row" sx={{ border: '1px solid #E4E4E4' }}>
-                <Wishlist wishlistRowData={wishlistRowData}/>
+                <Wishlist wishlistRowData={wishlistRowData} AutoRefreshWishlistPage={AutoRefreshWishlistPage}/>
               </TableCell>
             </TableRow>
           ))}

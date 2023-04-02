@@ -6,8 +6,8 @@ import Routing from './Route/Routing';
 function App() {
   return (
     <div className="App">
-      {/* <Routing/> */}
-      <WishlistPage/>
+      <Routing/>
+      {/* <WishlistPage/> */}
     </div>
   );
 }

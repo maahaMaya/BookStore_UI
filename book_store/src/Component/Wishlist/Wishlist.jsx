@@ -1,14 +1,27 @@
 import React from "react";
 import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { DeleteWishlistApi } from "../../Services/WishlistService";
 
 function Wishlist(props) {
+    const DeleteWishlistCall = () => {
+        let wishlist_idData = {
+            "wishlist_id": props.wishlistRowData.wishlist_id
+        }
+        DeleteWishlistApi(wishlist_idData)
+            .then(res => {
+                props.AutoRefreshWishlistPage()
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     return (
         <>
-            <div style={{ display: 'flex', marginLeft: '3vw', gap: '35vw', marginTop:'3vh' }}>
+            <div style={{ display: 'flex', marginLeft: '3vw', gap: '35vw', marginTop: '3vh' }}>
                 <div style={{ width: '20vw', height: '15vh', display: 'flex', gap: '1.5vw' }}>
                     <div>
-                        <img src={props.wishlistRowData.book_image} height='85px' width='65px' alt="bookIamge"/>
+                        <img src={props.wishlistRowData.book_image} height='85px' width='65px' alt="bookIamge" />
                     </div>
                     <div>
                         <div style={{ fontWeight: '480', fontSize: '18px', float: 'left' }}>{props.wishlistRowData.book_title}</div>
@@ -21,7 +34,7 @@ function Wishlist(props) {
                         </div>
                     </div>
                 </div>
-                <IconButton aria-label="remindMe" sx={{width:'2vw', height:'2vw'}}>
+                <IconButton onClick={DeleteWishlistCall} aria-label="remindMe" sx={{ width: '2vw', height: '2vw' }}>
                     <DeleteForeverIcon fontSize="medium" />
                 </IconButton>
             </div>

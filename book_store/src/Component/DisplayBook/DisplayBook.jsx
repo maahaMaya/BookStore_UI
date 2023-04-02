@@ -10,6 +10,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import DisplayFeedback from "../DisplayFeedback/DisplayFeedback";
 import { AddFeedbackByCustomerApi, GetBookFeedbackByIdApi } from "../../Services/FeedbackService";
 import { AddBookInCustomerCartApi, GetCustomerBookInCartApi } from "../../Services/CartService";
+import { AddWishlistApi } from "../../Services/WishlistService";
 
 
 function DisplayBook(props) {
@@ -45,7 +46,7 @@ function DisplayBook(props) {
             }
             AddBookInCustomerCartApi(bookCartData)
                 .then(res => {
-                    if(customerCart.totalCustomerCart === 1){
+                    if (customerCart.totalCustomerCart === 1) {
                         setAddToBag(preState => ({ ...preState, displayButton: '', displayIncreaseDecrease: 'none' }))
                     }
                     GetCustomerCartDataInBookById()
@@ -98,6 +99,19 @@ function DisplayBook(props) {
             })
     }
 
+    const AddToWishlistClick = () => {
+        let addWishlistData = {
+            "book_id": props.openBookData.book_id
+        }
+        AddWishlistApi(addWishlistData)
+            .then(res => {
+
+            })
+            .catch(err => {
+                console.warn(err)
+            })
+    }
+
     useEffect(() => {
         GetFeedbackForBook()
         GetCustomerCartDataInBookById();
@@ -108,8 +122,8 @@ function DisplayBook(props) {
             .then(res => {
                 let cartDataByBookId = [];
                 cartDataByBookId = res.data.data.filter((cartData) => {
-                    if(cartData.book_id === props.openBookData.book_id){
-                        if(cartData.book_quantity > 0){
+                    if (cartData.book_id === props.openBookData.book_id) {
+                        if (cartData.book_quantity > 0) {
                             setAddToBag(preState => ({ ...preState, displayButton: 'none', displayIncreaseDecrease: '' }))
                         }
                         return cartData;
@@ -160,7 +174,7 @@ function DisplayBook(props) {
                             </div>
                         </div>
                         <div>
-                            <Button size="large" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '0.5vw', width: '11vw', backgroundColor: '#333333' }}>
+                            <Button onClick={AddToWishlistClick} size="large" variant="contained" style={{ textTransform: 'none', fontSize: '14px', marginRight: '0.5vw', width: '11vw', backgroundColor: '#333333' }}>
                                 <FavoriteIcon sx={{ fontSize: 20 }} /> &nbsp; WISHLIST
                             </Button>
                         </div>
