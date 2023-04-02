@@ -7,3 +7,8 @@ export const GetAllBookApi = (data) => {
     const response = axios.get(`${BookApi}/getAllBook`, data)
     return response
 }
+
+export const GetAllBookByIdApi = (data) => {
+    const response = axios.get(`${BookApi}/getBookById?book_id=${data}`, data)
+    return response
+}

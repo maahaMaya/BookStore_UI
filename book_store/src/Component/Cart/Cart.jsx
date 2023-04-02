@@ -8,10 +8,9 @@ function Cart() {
     useEffect(() => {
         if (localStorage.getItem("customerLogin")) {
             setCartToggle(false)
-            console.log("setCartToggle(false)")
         }
         else {
-            console.log("setCartToggle(true)")
+            setCartToggle(true)
         }
     }, [])
     return (
