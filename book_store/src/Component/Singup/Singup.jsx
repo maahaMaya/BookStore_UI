@@ -71,16 +71,14 @@ function Singup() {
                 "email_id": customerSingupDetails.email_id,
                 "passwords": customerSingupDetails.passwords,
                 "phone_number": customerSingupDetails.phone_number
-              }
+            }
             CustomerSignupApi(customerSigupData)
-            .then(res => {
-                console.log(res)
-                console.log("1")
-            })
-            .catch(err => {
-                console.log(err)
-                console.log("3")
-            })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 

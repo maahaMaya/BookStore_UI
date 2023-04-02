@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import NativeSelect from '@mui/material/NativeSelect';
-import { Button } from "@mui/material";
+import Button from '@mui/material/Button';
 import { GetAllBookByIdApi } from "../../Services/BookService";
-import { AddBookInCustomerCartApi } from "../../Services/CartService";
+import { AddBookInCustomerCartApi, DeleteCustomerBookInCartApi } from "../../Services/CartService";
 
 function CartPage(props) {
     const [customerOrderData, setCustomerOrderData] = useState({ address: '' });
@@ -66,6 +66,22 @@ function CartPage(props) {
 
     }
 
+    const DeleteCustomerCart = () => {
+        let deleteCartId = {
+            "cart_id": props.cart.cart_id
+          }
+        DeleteCustomerBookInCartApi(deleteCartId)
+            .then(res => {
+                props.AutoRefershCartPageWithLogin();
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const DeleteCustomerCartButton = () => {
+       DeleteCustomerCart();
+    }
 
     useEffect(() => {
         GetBookById(props.cart.book_id)
@@ -123,7 +139,10 @@ function CartPage(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button variant="text" sx={{ textTransform: 'none', fontSize: '14px', color: "#0A0102", marginTop: '-0.7vh' }}>
+                                    <Button 
+                                    variant="text" 
+                                    sx={{ textTransform: 'none', fontSize: '14px', color: "#0A0102", marginTop: '-0.7vh' }}
+                                    onClick={DeleteCustomerCartButton} >
                                         Remove
                                     </Button>
                                 </div>

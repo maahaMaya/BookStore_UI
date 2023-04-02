@@ -16,12 +16,17 @@ function CartPageWithLogin() {
         setToggle(preState => ({ ...preState, checkout: false }))
     }
 
+    const AutoRefershCartPageWithLogin = () => {
+        console.log("GetCustomerCartDataInCartPage")
+        GetCustomerCartDataInCartPage()
+    }
     const GetCustomerCartDataInCartPage = () => {
         GetCustomerBookInCartApi()
             .then(res => {
                 setCartPageData(res.data.data)
             })
             .catch(err => {
+                setToggle(preState => ({ ...preState, cart: true }))
                 console.log(err);
             })
     }
@@ -41,7 +46,7 @@ function CartPageWithLogin() {
                     </div> :
                     <div>
                         {
-                            cartPageData.map(cart => (<CartPage cart={cart}/>))
+                            cartPageData.map(cart => (<CartPage cart={cart} AutoRefershCartPageWithLogin={AutoRefershCartPageWithLogin}/>))
                         }
                     </div>
             }
