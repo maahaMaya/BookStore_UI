@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import './Header.css'
 
 import Badge from '@mui/material/Badge';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import HeaderPagebookImage from '../../images/bookLogo.png'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -36,8 +36,9 @@ function Header(props) {
 
     const StyledBadge = styled(Badge)({
         "& .MuiBadge-badge": {
-            color: "#fff",
-            backgroundColor: "#A03037"
+            color: "#A03037",
+            backgroundColor: "#fff",
+            fontSize:'14px'
         }
     });
 
@@ -86,17 +87,15 @@ function Header(props) {
                             }}
                         />
                         <Button color="inherit" style={{ display: 'flex', flexDirection: 'column', textTransform: 'none', marginRight: '2vw' }} onClick={ProfileIcon}>
-                            <PersonOutlineRoundedIcon />
+                            <PersonOutlineRoundedIcon sx={{marginTop:'14px'}}/>
                             <div style={{ fontSize: '10px', marginTop: '4px' }}>Profile</div>
-                            <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                         <Button color="inherit" style={{ display: 'flex', flexDirection: 'column', textTransform: 'none' }} onClick={CartIcon}>
-                            <StyledBadge badgeContent={customerCart.totalCustomerCart} sx={{ display: shoppingCartIconDisplay.first }}>
-                                <ShoppingCartIcon />
+                            <StyledBadge badgeContent={customerCart.totalCustomerCart} sx={{ display: shoppingCartIconDisplay.first, marginTop:'14px' }}>
+                                <ShoppingCartOutlinedIcon />
                             </StyledBadge >
-                            <ShoppingCartIcon sx={{ display: shoppingCartIconDisplay.second }} />
+                            <ShoppingCartOutlinedIcon sx={{ display: shoppingCartIconDisplay.second, marginTop:'14px' }} />
                             <div style={{ fontSize: '10px', marginTop: '4px' }}>Cart</div>
-                            <div style={{ backgroundColor: '#FCFCFC', marginBottom: '-11px', width: '30px', height: '4px', borderRadius: '10px' }}></div>
                         </Button>
                     </Toolbar>
                 </AppBar>
